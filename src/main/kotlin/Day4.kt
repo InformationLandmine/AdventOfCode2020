@@ -2,23 +2,26 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
-    println("Advent of Code day 4")
+    println("Advent of Code day 5")
 
     // Setup - build a list of maps
     val passports = ArrayList<HashMap<String, String>>()
-    var passport = HashMap<String, String>()
-    File("day4input").forEachLine {
-        if (it == "") {  // empty line - new passport
-            passports.add(passport)
-            passport = HashMap<String, String>()
-        } else {
-            it.split(' ').forEach {
-                val kvPair = it.split(':')
-                passport.put(kvPair[0], kvPair[1])
+    var timeMs = measureTimeMillis {
+        var passport = HashMap<String, String>()
+        File("day4input").forEachLine {
+            if (it == "") {  // empty line - new passport
+                passports.add(passport)
+                passport = HashMap<String, String>()
+            } else {
+                it.split(' ').forEach {
+                    val kvPair = it.split(':')
+                    passport.put(kvPair[0], kvPair[1])
+                }
             }
         }
+        passports.add(passport)
     }
-    passports.add(passport)
+    println("Took $timeMs ms to parse input data")
 
     // Constraints
     val requiredKeys = listOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
@@ -30,21 +33,27 @@ fun main(args: Array<String>) {
     val eclRegex = """amb|blu|brn|gry|grn|hzl|oth""".toRegex()
     val pidRegex = """\d{9}""".toRegex()
 
+
     // Part 1 - Count valid passports
-    var validCount = passports.filter { it.keys.containsAll(requiredKeys) }.size
-    println("There are $validCount valid passports out of ${passports.size}")
+    timeMs = measureTimeMillis {
+        val validCount = passports.filter { it.keys.containsAll(requiredKeys) }.size
+        println("There are $validCount valid passports out of ${passports.size}")
+    }
+    println("Part 1 solution took $timeMs ms")
 
     // Part 2 - Count valid passports with stricter data validation
-    validCount = passports.filter {
-        it.keys.containsAll(requiredKeys) &&
-        byrRegex.matches(it["byr"]?:"") &&
-        iyrRegex.matches(it["iyr"]?:"") &&
-        eyrRegex.matches(it["eyr"]?:"") &&
-        hgtRegex.matches(it["hgt"]?:"") &&
-        hclRegex.matches(it["hcl"]?:"") &&
-        eclRegex.matches(it["ecl"]?:"") &&
-        pidRegex.matches(it["pid"]?:"")
-    }.size
-    println("There are $validCount valid passports out of ${passports.size}")
-
+    timeMs = measureTimeMillis {
+        val validCount = passports.filter {
+            it.keys.containsAll(requiredKeys) &&
+                    byrRegex.matches(it["byr"]?:"") &&
+                    iyrRegex.matches(it["iyr"]?:"") &&
+                    eyrRegex.matches(it["eyr"]?:"") &&
+                    hgtRegex.matches(it["hgt"]?:"") &&
+                    hclRegex.matches(it["hcl"]?:"") &&
+                    eclRegex.matches(it["ecl"]?:"") &&
+                    pidRegex.matches(it["pid"]?:"")
+        }.size
+        println("There are $validCount valid passports out of ${passports.size}")
+    }
+    println("Part 2 solution took $timeMs ms")
 }
