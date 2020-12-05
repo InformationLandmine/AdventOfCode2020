@@ -8,6 +8,7 @@ fun main(args: Array<String>) {
     val input = ArrayList<Int>()
     File("day1input").forEachLine { input.add(it.toInt()) }
 
+    // Part 1
     var timeMs = measureTimeMillis {
         outerLoop@for (i in 0..input.size - 1) {
             for (j in i + 1..input.size - 1) {
