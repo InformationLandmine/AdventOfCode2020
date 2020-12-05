@@ -2,7 +2,7 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
-    println("Advent of Code day 5")
+    println("Advent of Code day 4")
 
     // Setup - build a list of maps
     val passports = ArrayList<HashMap<String, String>>()
