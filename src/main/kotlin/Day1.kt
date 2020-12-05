@@ -5,17 +5,31 @@ fun main(args: Array<String>) {
     println("Advent of Code day 1")
 
     val target = 2020
-    val input: ArrayList<Int> = ArrayList()
-    File("day1input").forEachLine {
-        input.add(it.toInt())
-    }
+    val input = ArrayList<Int>()
+    File("day1input").forEachLine { input.add(it.toInt()) }
 
-    val timeMs = measureTimeMillis {
-        input.forEach { i: Int ->
-            input.forEach { j: Int ->
-                input.forEach { k: Int ->
-                    if (/*setOf(i, j, k).size == 3 &&*/ i + j + k == target) {
-                        println("$i + $j + $k = $target; $i * $j * $k = ${i * j * k}")
+    var timeMs = measureTimeMillis {
+        outerLoop@for (i in 0..input.size - 1) {
+            for (j in i + 1..input.size - 1) {
+                if (input[i] + input[j] == target) {
+                    println("${input[i]} + ${input[j]} = $target")
+                    println("${input[i]} * ${input[j]} = ${input[i] * input[j]}")
+                    break@outerLoop
+                }
+            }
+        }
+    }
+    println("Solution took $timeMs ms")
+
+    // Part 2
+    timeMs = measureTimeMillis {
+        outerLoop@for (i in 0..input.size - 1) {
+            for (j in i + 1..input.size - 1) {
+                for (k in j + 1..input.size - 1) {
+                    if (input[i] + input[j] + input[k] == target) {
+                        println("${input[i]} + ${input[j]} + ${input[k]} = $target")
+                        println("${input[i]} * ${input[j]} * ${input[k]} = ${input[i] * input[j] * input[k]}")
+                        break@outerLoop
                     }
                 }
             }
@@ -23,14 +37,3 @@ fun main(args: Array<String>) {
     }
     println("Solution took $timeMs ms")
 }
-
-//    input.forEachIndexed { iIndex: Int, i: Int ->
-//        input.subList(iIndex, input.size).forEachIndexed { jIndex: Int, j: Int ->
-//            input.subList(jIndex, input.size).forEach { k: Int ->
-//                if (setOf(i, j, k).size == 3 && i + j + k == 2020) {
-//                    println("$i plus $j plus $k = 2020; $i * $j * $k = ${i * j * k}")
-//                }
-//            }
-//        }
-//    }
-//}
