@@ -45,13 +45,13 @@ fun main(args: Array<String>) {
     timeMs = measureTimeMillis {
         val validCount = passports.filter {
             it.keys.containsAll(requiredKeys) &&
-                    byrRegex.matches(it["byr"]?:"") &&
-                    iyrRegex.matches(it["iyr"]?:"") &&
-                    eyrRegex.matches(it["eyr"]?:"") &&
-                    hgtRegex.matches(it["hgt"]?:"") &&
-                    hclRegex.matches(it["hcl"]?:"") &&
-                    eclRegex.matches(it["ecl"]?:"") &&
-                    pidRegex.matches(it["pid"]?:"")
+            byrRegex.matches(it["byr"]?:"") &&
+            iyrRegex.matches(it["iyr"]?:"") &&
+            eyrRegex.matches(it["eyr"]?:"") &&
+            hgtRegex.matches(it["hgt"]?:"") &&
+            hclRegex.matches(it["hcl"]?:"") &&
+            eclRegex.matches(it["ecl"]?:"") &&
+            pidRegex.matches(it["pid"]?:"")
         }.size
         println("There are $validCount valid passports out of ${passports.size}")
     }
