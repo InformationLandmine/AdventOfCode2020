@@ -13,7 +13,7 @@ fun main(args: Array<String>) {
     println("The highest numbered seat is $highestSeat")
 
     // Part 2 - Find your seat on a full flight
-    val allSeats = (0..890).toList()
+    val allSeats = (0..(highestSeat?:0)).toList()
     val takenSeats = boardingPasses.map { it.seat }
     val vacantSeats = allSeats.minus(takenSeats)
     val mySeat = vacantSeats.filter { !vacantSeats.contains(it - 1) && !vacantSeats.contains(it + 1) }
