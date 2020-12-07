@@ -4,16 +4,16 @@ import kotlin.system.measureTimeMillis
 fun main(args: Array<String>) {
     println("Advent of Code day 6")
 
-    // Setup - Read the data and parse into lists of group data
-    val groups: ArrayList<ArrayList<String>> = ArrayList()
+    // Setup - Read the data and parse into sets of group data
+    val groups: ArrayList<ArrayList<Set<Char>>> = ArrayList()
     var timeMs = measureTimeMillis {
-        var groupAnswers = ArrayList<String>()
+        var groupAnswers = ArrayList<Set<Char>>()
         File("day6input").forEachLine {
             if (it == "") {
                 groups.add(groupAnswers)
                 groupAnswers = ArrayList()
             } else {
-                groupAnswers.add(it)
+                groupAnswers.add(it.toSet())
             }
         }
         groups.add(groupAnswers)
@@ -25,8 +25,7 @@ fun main(args: Array<String>) {
     timeMs = measureTimeMillis {
         groups.forEach { group ->
             val uniqueAnswers = hashSetOf<Char>()
-            //group.forEach { uniqueAnswers.addAll(it.toList()) }   // This is too slow!
-            group.forEach { answers -> answers.forEach { uniqueAnswers.add(it) } }
+            group.forEach { uniqueAnswers.addAll(it) }
             totalUniqueAnswers += uniqueAnswers.size
         }
     }
@@ -37,9 +36,9 @@ fun main(args: Array<String>) {
     var totalCommonAnswers = 0
     timeMs = measureTimeMillis {
         groups.forEach { group ->
-            var commonAnswers = group[0].toSet()
+            var commonAnswers = group[0]
             for (i in 1..group.size - 1) {
-                commonAnswers = commonAnswers.intersect(group[i].toList())
+                commonAnswers = commonAnswers.intersect(group[i])
             }
             totalCommonAnswers += commonAnswers.size
         }
