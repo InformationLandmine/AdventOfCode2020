@@ -6,11 +6,8 @@ fun main(args: Array<String>) {
 
     // Setup
     val input: ArrayList<String> = ArrayList()
-    File("day3input").forEachLine {
-        input.add(it)
-    }
+    File("day3input").forEachLine { input.add(it) }
     println("The map is ${input.size} lines long and ${input[0].length} columns wide")
-
 
     // Part 1
     var slopesToTest = listOf(MapPoint(3, 1))
@@ -30,7 +27,7 @@ fun runToboggan(map: List<String>, slopes: List<MapPoint>) {
     val mapWidth = map[0].length
     var treeAcc = 1
     val timeMs = measureTimeMillis {
-        slopes.forEach { slope ->
+        for (slope in slopes) {
             var treeCount = 0
             val location = slope.copy()
             while (location.y < map.size) {
