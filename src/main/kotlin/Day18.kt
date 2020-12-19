@@ -41,8 +41,7 @@ fun eval1(expr: String): Long {
                 op = ::opMult
             }
             ')' -> {
-                val popped = opStack.pop()
-                result = popped.second(popped.first, result)
+                result = with(opStack.pop()) { second(first, result) }
             }
             else -> { result = op(result, it.toString().toLong()) }
         }
@@ -70,20 +69,17 @@ fun eval2(expr: String): Long {
             }
             ')' -> {
                 while (opStack.isNotEmpty() && opStack.peek().second == ::opMult) {
-                    val popped = opStack.pop()
-                    result = popped.second(popped.first, result)
+                    result = with(opStack.pop()) { second(first, result) }
                 }
                 if (opStack.isNotEmpty() && opStack.peek().second == ::opAdd) {
-                    val popped = opStack.pop()
-                    result = popped.second(popped.first, result)
+                    result = with(opStack.pop()) { second(first, result) }
                 }
             }
             else -> { result = op(result, it.toString().toLong()) }
         }
     }
     while (opStack.isNotEmpty()) {
-        val popped = opStack.pop()
-        result = popped.second(popped.first, result)
+        result = with(opStack.pop()) { second(first, result) }
     }
     return result
 }
